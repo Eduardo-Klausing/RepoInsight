@@ -1,4 +1,4 @@
-# TP - Engenharia de Software 2  
+RepoInsight
 ## Mineração de Repositórios de Software  
 
 ### 1. Membros do Grupo  
@@ -47,6 +47,11 @@ A ferramenta será executada via terminal e poderá gerar relatórios resumidos 
 - **Origem dos dados**: Git + GitHub.  
 - **Artefatos analisados**: commits, issues, código-fonte.  
 - **Resultados apresentados**: métricas por autor, histórico de contribuição, contagem de linhas de código, vulnerabilidades potenciais.  
-- **Objetivo principal**: ajudar equipes a identificar concentração de trabalho em poucos membros e problemas de manutenção/segurança.  
+- **Objetivo principal**: ajudar equipes a identificar concentração de trabalho em poucos membros e problemas de manutenção/segurança.
+
+- Possibilidades de implementação:
+- 1: Rodar bandits através dos diffs dos commits
+- 2: Rodar bandit através de todos os arquivos que contém dependências do diff
+- 3: Rodar bandit através do projeto inteiro de cada commit
 
 ---
