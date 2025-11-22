@@ -10,8 +10,8 @@ ipykernel
 ipython
 ipython_pygments_lexers==1.1.1
 jedi==0.19.2
-jupyter_client==8.6.3
-jupyter_core==5.9.1
+jupyter_client
+jupyter_core
 lizard==1.19.0
 matplotlib-inline==0.2.1
 nest-asyncio==1.6.0
@@ -46,3 +46,4 @@ typer
 flake8
 pytest
 pytest-cov
+
