@@ -21,9 +21,8 @@ RepoInsight
 
 **Como utilizar**
 - Executar a mineração e análise:
-  - `python scripts/run_analysis.py run`
+  - `python scripts/run_analysis.py run <url>`
   - Opções:
-    - `--repo-url <url>` para escolher o repositório
     - `--max-commits <N>` para limitar commits
 - Visualizar ranking geral (score final):
   - `python scripts/run_analysis.py view --top 10 --sort-by final_score`
