@@ -1,1 +1,6 @@
 .venv/
+.cache/
+.analyzers/__pycache__/
+.collectors/__pycache__/
+.metrics/__pycache__/
+*.json

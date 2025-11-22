@@ -54,7 +54,9 @@ class CommitAnalyzer:
 
             if len(file_paths) > 0:
                 files_str = " ".join(file_paths)
-                cmd_flake8 = f"flake8 --exit-zero {files_str}"
+                #cmd_flake8 = f"flake8 --exit-zero {files_str}"
+                cmd_flake8 = f"flake8 --isolated --disable-noqa --exit-zero {tmpdir}"
+                #out_flake, err_flake = run_cmd(cmd_flake8)
                 _, out_flake, err_flake = run_cmd(cmd_flake8)
                 results["flake8"]["output"] = out_flake or ""
                 results["flake8"]["errors"] = err_flake or ""
