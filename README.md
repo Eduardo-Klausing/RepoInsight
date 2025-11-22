@@ -43,9 +43,7 @@ RepoInsight
 - Mineração de repositórios e agregação de métricas de manutenção e qualidade (Flake8).
 - Coluna de Flake8 contabilizada no relatório de autores.
 
-**Nota sobre segurança**
-- A contagem de vulnerabilidades via Bandit foi descontinuada para estabilizar a análise em múltiplas plataformas.
-- O score final agora considera apenas:
+- O score considera:
   - `M` (Maintainability): inversamente proporcional à complexidade agregada por autor.
   - `Q` (Quality): inversamente proporcional ao total de mensagens do Flake8.
   - `Score`: `0.6*M + 0.4*Q`.

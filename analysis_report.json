@@ -1,42 +1,50 @@
 {
-  "Chetan Kaushik": {
-    "commits": 9,
-    "complexity_sum": 31,
-    "flake8_messages": 10,
-    "maintainability": 0.22499999999999998,
-    "quality": 0.09090909090909091,
-    "final_score": 0.17136363636363636
-  },
-  "Anup Kumar Panwar": {
-    "commits": 2,
+  "Eduardo-Klausing": {
+    "commits": 4,
     "complexity_sum": 0,
-    "flake8_messages": 4,
+    "flake8_messages": 8,
     "maintainability": 1.0,
-    "quality": 0.2,
-    "final_score": 0.6799999999999999
+    "quality": 0.1111111111111111,
+    "final_score": 0.6444444444444444
   },
-  "Harshil Darji": {
-    "commits": 5,
-    "complexity_sum": 21,
-    "flake8_messages": 10,
-    "maintainability": 0.1923076923076923,
-    "quality": 0.09090909090909091,
-    "final_score": 0.15174825174825174
-  },
-  "vincenzobaz": {
-    "commits": 1,
-    "complexity_sum": 5,
-    "flake8_messages": 2,
-    "maintainability": 0.16666666666666666,
-    "quality": 0.3333333333333333,
-    "final_score": 0.23333333333333334
-  },
-  "Sergey Tsaplin": {
+  "Fadoul-Conecta": {
     "commits": 3,
-    "complexity_sum": 9,
-    "flake8_messages": 4,
-    "maintainability": 0.25,
-    "quality": 0.2,
-    "final_score": 0.23
+    "complexity_sum": 0,
+    "flake8_messages": 6,
+    "maintainability": 1.0,
+    "quality": 0.14285714285714285,
+    "final_score": 0.6571428571428571
+  },
+  "FlvBiel": {
+    "commits": 1,
+    "complexity_sum": 21,
+    "flake8_messages": 2,
+    "maintainability": 0.045454545454545456,
+    "quality": 0.3333333333333333,
+    "final_score": 0.1606060606060606
+  },
+  "Eduardo Klausing": {
+    "commits": 1,
+    "complexity_sum": 46,
+    "flake8_messages": 2,
+    "maintainability": 0.02127659574468085,
+    "quality": 0.3333333333333333,
+    "final_score": 0.14609929078014183
+  },
+  "Eduardo": {
+    "commits": 5,
+    "complexity_sum": 16,
+    "flake8_messages": 6,
+    "maintainability": 0.23809523809523808,
+    "quality": 0.14285714285714285,
+    "final_score": 0.19999999999999998
+  },
+  "Gabriel Arcanjo Campelo Fadoul": {
+    "commits": 4,
+    "complexity_sum": 0,
+    "flake8_messages": 8,
+    "maintainability": 1.0,
+    "quality": 0.1111111111111111,
+    "final_score": 0.6444444444444444
   }
 }

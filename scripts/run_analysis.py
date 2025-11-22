@@ -1,9 +1,11 @@
 import sys, os
-from typer import Typer, Option
+import shutil
+from typer import Typer, Option, Argument
 from rich.console import Console
 from rich.table import Table
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeElapsedColumn
 import json
+import warnings
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from collectors.commit_collector import collect_commits
 from analyzers.commit_analyzer import CommitAnalyzer
@@ -20,7 +22,6 @@ def _show_table(report, sort_by: str = "final_score", top: int = 10):
     table.add_column("Flake8")
     table.add_column("M", style="green")
     table.add_column("Q", style="green")
-    table.add_column("S", style="green")
     table.add_column("Score", style="yellow")
     items = list(report.items())
     items.sort(key=lambda kv: kv[1].get(sort_by, 0), reverse=True)
@@ -89,19 +90,40 @@ def _show_top_commits_full(report, top: int = 20):
 
 @app.command()
 def run(
-    repo_url: str = Option("https://github.com/TheAlgorithms/Python", "--repo-url"),
-    max_commits: int | None = Option(None, "--max-commits"),
-    min_commits: int | None = Option(0, "--min-commits"),
+    repo_url: str = Argument(..., help="URL do repositório Git (ex: https://github.com/user/repo)"),
+    max_commits: int | None = Option(None, "--max-commits", help="Número máximo de commits para analisar"),
+    min_commits: int | None = Option(0, "--min-commits", help="Número mínimo de commits por autor"),
+    clear_cache: bool = Option(False, "--clear-cache", help="Limpa o cache do repositório antes de coletar"),
 ):
-    with Progress(
-        SpinnerColumn(),
-        TextColumn("{task.description}"),
-        BarColumn(),
-        TimeElapsedColumn(),
-    ) as progress:
-        t1 = progress.add_task("[bold blue]Coletando commits", total=None)
-        commits = collect_commits(repo_url, max_commits)
-        progress.update(t1, completed=1)
+    # Limpar cache se solicitado
+    if clear_cache:
+        cache_dir = os.path.join(os.getcwd(), '.cache', 'repoinsight')
+        if os.path.exists(cache_dir):
+            console.print("[yellow]Limpando cache...[/yellow]")
+            try:
+                shutil.rmtree(cache_dir, ignore_errors=True)
+                console.print("[green]Cache limpo com sucesso![/green]")
+            except Exception as e:
+                console.print(f"[red]Erro ao limpar cache: {e}[/red]")
+    
+    # Suprimir warnings durante a coleta para não poluir a saída
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("{task.description}"),
+            BarColumn(),
+            TimeElapsedColumn(),
+        ) as progress:
+            t1 = progress.add_task("[bold blue]Coletando commits", total=None)
+            try:
+                commits = collect_commits(repo_url, max_commits, skip_errors=True)
+                progress.update(t1, completed=1)
+            except Exception as e:
+                progress.update(t1, completed=1)
+                console.print(f"[bold red]Erro ao coletar commits:[/bold red] {str(e)}")
+                console.print("[yellow]Dica: Tente usar --clear-cache para limpar o cache corrompido[/yellow]")
+                raise
     ca = CommitAnalyzer()
     if commits:
         counts = {}
