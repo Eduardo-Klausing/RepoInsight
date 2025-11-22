@@ -1,57 +1,51 @@
 RepoInsight
-## Mineração de Repositórios de Software  
 
-### 1. Membros do Grupo  
-- Eduardo Klausing Gervásio Muniz 
-- Flávio Gabriel Soares Melo  
+### TP: Mineração de Repositórios de Software
+
+**Objetivo**
+- Desenvolver uma ferramenta de linha de comando que identifique problemas relevantes de manutenção/evolução de software por meio da mineração de repositórios.
+
+**Membros do grupo**
+- Eduardo Klausing Gervásio Muniz
+- Flávio Gabriel Soares Melo
 - Gabriel Arcanjo Campelo Fadoul
-  
----
 
-### 2. Explicação do Sistema  
-O sistema consiste em uma ferramenta de **linha de comando (CLI)** que analisa a contribuição da equipe em projetos de software hospedados em repositórios Git/GitHub.  
+**Tecnologias utilizadas**
+- PyDriller: extração de commits, autores, arquivos e métricas de complexidade.
+- Flake8: verificação de estilo/qualidade, contabilizada em relatórios.
+- Typer: CLI organizada com comandos.
+- Rich: saída visual (tabelas e progresso) no terminal.
 
-O foco principal é:  
-- **Métricas de contribuição**  
-  - Número total de commits por autor.  
-  - Frequência de commits ao longo do tempo.  
-  - Issues abertas e fechadas por cada colaborador.  
-  - Cálculo do **bus factor** → identificar se apenas um desenvolvedor é responsável por grande parte do código.  
+**Instalação**
+- `pip install -r requirements.txt`
 
-- **Métricas de qualidade do código**  
-  - Contagem de linhas de código por arquivo/módulo (complexidade estrutural).  
-  - Identificação de **bugs potenciais e falhas de segurança** usando analisadores estáticos (Bandit para Python, PMD para múltiplas linguagens).  
+**Como utilizar**
+- Executar a mineração e análise:
+  - `python scripts/run_analysis.py run`
+  - Opções:
+    - `--repo-url <url>` para escolher o repositório
+    - `--max-commits <N>` para limitar commits
+- Visualizar ranking geral (score final):
+  - `python scripts/run_analysis.py view --top 10 --sort-by final_score`
+- Top por número de commits (detalhado):
+  - `python scripts/run_analysis.py top --top 20 --detailed`
 
-A ferramenta será executada via terminal e poderá gerar relatórios resumidos para auxiliar na avaliação de manutenção e qualidade do projeto.  
+**Como executar os testes localmente**
+- `pytest` ou `python -m pytest`
+- Os testes devem cobrir coleta (PyDriller), análise (Flake8) e agregação de métricas.
 
----
+**GitHub Actions**
+- Configure um workflow para executar `pytest` automaticamente em cada push/PR.
+- Exemplo de passos: checkout, setup Python, instalar dependências, rodar testes.
 
-### 3. Tecnologias Utilizadas  
+**Especificação atendida**
+- CLI com comandos (`run`, `view`, `top`).
+- Mineração de repositórios e agregação de métricas de manutenção e qualidade (Flake8).
+- Coluna de Flake8 contabilizada no relatório de autores.
 
-- **Mineração e Análise de Repositórios**  
-  - [Git](https://git-scm.com/) → coleta do histórico de commits.  
-  - [PyDriller](https://github.com/ishepard/pydriller) → extração de informações de commits, autores e datas.  
-  - [PyGithub](https://github.com/PyGithub/PyGithub) → análise de issues, pull requests e dados do GitHub.  
-  - [GitPython](https://github.com/gitpython-developers/GitPython) → interação direta com repositórios Git.  
-
-- **Análise de Código**  
-  - [Bandit](https://github.com/PyCQA/bandit) → análise de vulnerabilidades em Python.  
-  - [PMD](https://github.com/pmd/pmd) → análise estática para detectar bugs em múltiplas linguagens.  
-
-- **Interface de Linha de Comando (CLI)**  
-  - [Typer](https://github.com/fastapi/typer) → construção da interface amigável em linha de comando.  
-
----
-
-### Decisões Importantes  
-- **Origem dos dados**: Git + GitHub.  
-- **Artefatos analisados**: commits, issues, código-fonte.  
-- **Resultados apresentados**: métricas por autor, histórico de contribuição, contagem de linhas de código, vulnerabilidades potenciais.  
-- **Objetivo principal**: ajudar equipes a identificar concentração de trabalho em poucos membros e problemas de manutenção/segurança.
-
-- Possibilidades de implementação:
-- 1: Rodar bandits através dos diffs dos commits
-- 2: Rodar bandit através de todos os arquivos que contém dependências do diff
-- 3: Rodar bandit através do projeto inteiro de cada commit
-
----
+**Nota sobre segurança**
+- A contagem de vulnerabilidades via Bandit foi descontinuada para estabilizar a análise em múltiplas plataformas.
+- O score final agora considera apenas:
+  - `M` (Maintainability): inversamente proporcional à complexidade agregada por autor.
+  - `Q` (Quality): inversamente proporcional ao total de mensagens do Flake8.
+  - `Score`: `0.6*M + 0.4*Q`.

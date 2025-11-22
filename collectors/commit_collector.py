@@ -1,11 +1,14 @@
-import pandas as pd
+import os
 from pydriller import Repository
 
 
-def collect_commits():
+def collect_commits(repo_url: str = 'https://github.com/ishepard/pydriller', max_commits: int | None = None):
     commit_data = []
+    count = 0
+    cache_dir = os.path.join(os.getcwd(), '.cache', 'repoinsight')
+    os.makedirs(cache_dir, exist_ok=True)
 
-    for commit in Repository('https://github.com/TheAlgorithms/Python').traverse_commits():
+    for commit in Repository(repo_url, clone_repo_to=cache_dir).traverse_commits():
         commit_data.append({
             'hash': commit.hash,
             'author': commit.author.name,
@@ -31,8 +34,8 @@ def collect_commits():
                 "complexity": m.complexity,   # radon integrado!
                 "source_code": m.source_code, # conteúdo do arquivo pós-commit
             })
-
-    #df_commits = pd.DataFrame(commit_data)
-    #df_commits.head()
+        count += 1
+        if max_commits is not None and count >= max_commits:
+            break
 
     return commit_data
