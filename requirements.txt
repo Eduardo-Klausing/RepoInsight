@@ -44,3 +44,5 @@ wcwidth==0.2.14
 rich
 typer
 flake8
+pytest
+pytest-cov
